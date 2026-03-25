@@ -1,0 +1,6 @@
+@WarriorsServer_HostAddress = http://localhost:5119
+
+GET {{WarriorsServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
