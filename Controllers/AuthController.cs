@@ -17,19 +17,4 @@ public class AuthController : ControllerBase
             AUID = auid
         });
     }
-
-    [HttpPost("/battle-braves/login")]
-    public IActionResult Login([FromBody] dynamic body)
-    {
-        string auid = body?.AUID;
-
-        if (string.IsNullOrEmpty(auid))
-            return BadRequest(new { error = "Missing AUID" });
-
-        return Ok(new {
-            sessionToken = "TOKEN-" + Guid.NewGuid().ToString("N"),
-            gameUserID = "USER-" + Guid.NewGuid().ToString("N"),
-            deviceTokenHash = "hash123"
-        });
-    }
 }
