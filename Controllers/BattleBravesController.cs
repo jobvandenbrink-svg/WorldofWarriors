@@ -1,5 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// Railway port binding
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 
 builder.WebHost.ConfigureKestrel(options =>
