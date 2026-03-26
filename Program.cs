@@ -1,18 +1,17 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Kestrel: HTTP only (Railway handles HTTPS externally)
+// Read Railway's assigned port
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(80);
+    // Listen on the port Railway provides
+    options.ListenAnyIP(int.Parse(port));
 });
 
 builder.Services.AddControllers();
 
 var app = builder.Build();
-
-// Railway sets PORT env var, so bind to it
-var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
-app.Urls.Add($"http://0.0.0.0:{port}");
 
 app.MapControllers();
 
