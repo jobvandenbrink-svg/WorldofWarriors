@@ -1,9 +1,5 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-
-var app = builder.Build();
-
 builder.WebHost.ConfigureKestrel(options =>
 {
     // Enable HTTP on port 80
@@ -16,6 +12,10 @@ builder.WebHost.ConfigureKestrel(options =>
     });
 });
 
+
+builder.Services.AddControllers();
+
+var app = builder.Build();
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 app.Urls.Add($"http://0.0.0.0:{port}");
