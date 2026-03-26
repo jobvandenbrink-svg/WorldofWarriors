@@ -1,11 +1,10 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Read Railway's assigned port
+// Railway port binding
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 
 builder.WebHost.ConfigureKestrel(options =>
 {
-    // Listen on the port Railway provides
     options.ListenAnyIP(int.Parse(port));
 });
 

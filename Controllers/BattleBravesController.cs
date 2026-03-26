@@ -1,17 +1,24 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.AspNetCore.Mvc;
 
-// Railway port binding
-var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-
-builder.WebHost.ConfigureKestrel(options =>
+[ApiController]
+[Route("battle-braves")]
+public class BattleBravesController : ControllerBase
 {
-    options.ListenAnyIP(int.Parse(port));
-});
+    public class LoginData
+    {
+        public string AUID { get; set; }
+    }
 
-builder.Services.AddControllers();
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] LoginData data)
+    {
+        if (string.IsNullOrEmpty(data?.AUID))
+            return BadRequest(new { error = "Missing AUID" });
 
-var app = builder.Build();
-
-app.MapControllers();
-
-app.Run();
+        return Ok(new {
+            sessionToken = "TOKEN-" + Guid.NewGuid().ToString("N"),
+            gameUserID = "USER-" + Guid.NewGuid().ToString("N"),
+            deviceTokenHash = "hash123"
+        });
+    }
+}
